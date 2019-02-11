@@ -31,6 +31,8 @@ for j in file:
         output.append(f_time + '{:>18,}'.format(os.path.getsize(j)) + ' ' + os.path.basename(j))
 
 no_of_files = len(file) - no_of_directories
+print(' Volume in drive is')
+print(' Volume Serial Number is')
 print('\n Directory of ' + file[0] + '\n')
 for i in output:
     print(i)
