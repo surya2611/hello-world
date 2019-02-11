@@ -33,10 +33,7 @@ for j in file:
         output.append('{:<20} {:>14,} {}'.format(f_time, os.path.getsize(j), os.path.basename(j)))
 
 no_of_files = len(file) - no_of_directories
-drive = os.path.abspath(os.sep)
-x = os.popen('DIR ' + drive)
-print(x.readline() + x.readline())
-x.close()
+
 print('\n Directory of ' + file[0] + '\n')
 for i in output:
     print(i)
