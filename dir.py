@@ -21,14 +21,14 @@ for j in file:
             name = '.'
             cwd_last_mtime = f_time
         elif j == os.path.abspath(os.pardir):
-            name == '..'
+            name = '..'
             f_time = cwd_last_mtime
         else:
             name = os.path.basename(j)
-        output.append(f_time + '{:<19}'.format('    (DIR) ') + name)
+        output.append('{:<20} {:<15}{}'.format(f_time, '(DIR)', name))
     else:
         total_size_of_files += os.path.getsize(j)
-        output.append(f_time + '{:>18,}'.format(os.path.getsize(j)) + ' ' + os.path.basename(j))
+        output.append('{:<20} {:>14,} {}'.format(f_time, os.path.getsize(j), os.path.basename(j)))
 
 no_of_files = len(file) - no_of_directories
 print(' Volume in drive is')
@@ -36,5 +36,5 @@ print(' Volume Serial Number is')
 print('\n Directory of ' + file[0] + '\n')
 for i in output:
     print(i)
-print('{:>16,}'.format(no_of_files) + ' File(s)' + '{:>15,}'.format(total_size_of_files) + ' bytes')
-print('{:>16,}'.format(no_of_directories) + ' Dir(s)' + '{:>16,}'.format(shutil.disk_usage('.').free) + ' bytes free')
+print('{:>16,} File(s){:>15,} bytes'.format(no_of_files, total_size_of_files))
+print('{:>16,} Dir(s){:>16,} bytes free'.format(no_of_directories, shutil.disk_usage('.').free))
