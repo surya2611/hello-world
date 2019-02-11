@@ -6,6 +6,8 @@ total_size_of_files = no_of_directories = 0
 name = ''
 
 for i in os.listdir('.'):
+    if i.startswith('.'):
+        continue
     file.append(os.path.realpath(i))
 
 for j in file:
