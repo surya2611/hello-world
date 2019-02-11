@@ -1,3 +1,3 @@
 # hello-world
-testing repository
-future works to test pull
+
+this is my current and first repository
