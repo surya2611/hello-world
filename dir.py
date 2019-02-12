@@ -1,5 +1,6 @@
 #implement code for the case of not having parent directory
 #implement first two lines of output
+#separate computing logic from printing logic
 
 import os, time, shutil
 
