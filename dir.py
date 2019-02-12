@@ -1,15 +1,13 @@
 # TODO LIST
-#implement code for the case of not having parent directory
 #implement first two lines of output
-#separate computing logic from printing logic
 
 import os, time, shutil
 
 output = []
 output.append('\n Directory of ' + os.getcwd() + '\n')
+
 if os.path.abspath(os.pardir) != os.path.abspath(os.sep):
     file = [os.curdir, os.pardir]
-
 
 for i in os.listdir('.'):
     if i.startswith('.'):
