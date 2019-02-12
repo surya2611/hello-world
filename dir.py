@@ -1,3 +1,4 @@
+# TODO LIST
 #implement code for the case of not having parent directory
 #implement first two lines of output
 #separate computing logic from printing logic
@@ -5,7 +6,10 @@
 import os, time, shutil
 
 file = [os.getcwd(), os.path.abspath(os.pardir)]
+
 output = []
+output.append('\n Directory of ' + file[0] + '\n')
+
 total_size_of_files = no_of_directories = 0
 name = ''
 
@@ -36,8 +40,8 @@ for j in file:
 
 no_of_files = len(file) - no_of_directories
 
-print('\n Directory of ' + file[0] + '\n')
+output.append('{:>16,} File(s){:>15,} bytes'.format(no_of_files, total_size_of_files))
+output.append('{:>16,} Dir(s){:>16,} bytes free'.format(no_of_directories, shutil.disk_usage('.').free))
+
 for i in output:
     print(i)
-print('{:>16,} File(s){:>15,} bytes'.format(no_of_files, total_size_of_files))
-print('{:>16,} Dir(s){:>16,} bytes free'.format(no_of_directories, shutil.disk_usage('.').free))
