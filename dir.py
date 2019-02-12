@@ -1,5 +1,6 @@
 # TODO LIST
 #implement first two lines of output
+#implement collect_data and print_data functions
 
 import os, time, shutil
 
