@@ -1,50 +1,55 @@
 # TODO LIST
-#implement first two lines of output
 #implement collect_data and print_data functions
-
 import os, time, shutil
 
-class path:
+class Path:
+    def __init__(self):
+        pass
 
-    def info(path):
-        data = {}
-        data['name'] = os.path.basename(path)
-        if os.path.isdir(path):
-            data['field'] = 'DIR'
+    def name(self, path):
+        return os.path.basename(path)
+
+    def last_modified_time(self, path):
+        return time.strftime('%d-%m-%Y  %H:%M', time.localtime(os.path.getmtime(path)))
+
+    def is_directory(self, path):
+        return os.path.isdir(path)
+
+    def is_file(self, path):
+        return os.path.isfile(path)
+
+    def files(self):
+        return len([i for i in os.listdir('.') if not i.startswith('.') and self.is_file(i)])
+
+    def directories(self):
+        return len([i for i in os.listdir('.') if not i.startswith('.') and self.is_directory(i)]) + 2
+
+    def size(self, path):
+        if self.is_file(path):
+            return os.stat(path).st_size
+
+    def children(self):
+        return [i for i in os.listdir('.') if not i.startswith('.')]
+
+    def parent(self):
+        return [i for i in os.path.abspath('.').split('\\')]
+
+cwd = Path()
+free_vol_in_drive = shutil.disk_usage('.').free
+total_size_of_files = sum([cwd.size(i) for i in cwd.children() if cwd.is_file(i)])
+def print_cwd_data():
+    dir_order = '{:<21}{:<15}{}'
+    file_order = '{}{:>18,} {}'
+    print('\n Directory of ' + os.getcwd() + '\n')
+    if len(cwd.parent()) > 1:
+        print(dir_order.format(cwd.last_modified_time('.'), '(DIR)', '.'))
+        print(dir_order.format(cwd.last_modified_time('.'), '(DIR)', '..'))
+    for i in cwd.children():
+        if cwd.is_directory(i):
+            print(dir_order.format(cwd.last_modified_time(i), '(DIR)', cwd.name(i)))
         else:
-            data['field'] = 'FILE'
-            data['file_size'] = os.path.getsize(path)
-        data['last_mod_time'] = time.strftime('%d-%m-%Y  %H:%M', time.localtime(os.path.getmtime(path)))
-        return data
+            print(file_order.format(cwd.last_modified_time(i), cwd.size(i), cwd.name(i)))
+    print('{:>16,} File(s){:>15,} bytes'.format(cwd.files(), total_size_of_files))
+    print('{:>16,} Dir(s){:>16,} bytes free'.format(cwd.directories(), free_vol_in_drive))
 
-    def print_cwd_data():
-        dir_order = '{:<21}{:<15}{}'
-        file_order = '{}{:>18,} {}'
-        print('\n Directory of ' + os.getcwd() + '\n')
-        for i in path.data:
-            if i['name'] == os.pardir:
-                continue
-            if i['field'] is 'DIR':
-                print(dir_order.format(i['last_mod_time'], '(DIR)', i['name']))
-                if i['name'] is os.curdir:
-                    print(dir_order.format(i['last_mod_time'], '(DIR)', os.pardir))
-            else:
-                print(file_order.format(i['last_mod_time'], i['file_size'], i['name']))
-        print('{:>16,} File(s){:>15,} bytes'.format(path.no_of_files, path.total_size_of_files))
-        print('{:>16,} Dir(s){:>16,} bytes free'.format(path.no_of_directories, path.free_vol_in_drive))
-
-    data = []
-    no_of_files = no_of_directories = total_size_of_files = 0
-    free_vol_in_drive = shutil.disk_usage('.').free
-    if os.path.abspath(os.pardir) is not os.path.abspath(os.sep):
-        data.extend([info('.'), info('..')])
-    for i in os.listdir('.'):
-        if not i.startswith('.'):
-             data.append(info(os.path.abspath(i)))
-    for i in data:
-        if i['field'] is 'FILE':
-            no_of_files += 1
-            total_size_of_files += i['file_size']
-    no_of_directories = len(data) - no_of_files
-
-path.print_cwd_data()
+print(print_cwd_data())
